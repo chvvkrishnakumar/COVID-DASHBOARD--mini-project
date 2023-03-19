@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
 
 import Loader from 'react-loader-spinner'
@@ -48,7 +49,7 @@ class About extends Component {
         <p className="vaccine-distribution">
           COVID-19 vaccines be ready for distribution
         </p>
-        <ul data-testid="faqsUnorderedList" className="ques-list">
+        <ul testid="faqsUnorderedList" className="ques-list">
           {faqList.map(eachValue => (
             <li className="ques-list-item" key={eachValue.qno}>
               <p className="question">{eachValue.question}</p>
@@ -62,7 +63,7 @@ class About extends Component {
 
   loaderContainer = () => (
     <div className="main-home-container">
-      <div data-testid="aboutRouteLoader" className="loader-container">
+      <div testid="aboutRouteLoader" className="loader-container">
         <Loader type="TailSpin" color="#007BFF" width="25px" height="25px" />
       </div>
     </div>

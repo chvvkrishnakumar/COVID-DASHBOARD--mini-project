@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
 
 import {Link} from 'react-router-dom'
@@ -284,10 +285,7 @@ class Home extends Component {
           />
         </div>
         {searchList.length !== 0 && searchInput !== '' && (
-          <ul
-            className="search-container"
-            data-testid="searchResultsUnorderedList"
-          >
+          <ul className="search-container" testid="searchResultsUnorderedList">
             {searchList.map(eachValue => (
               <Link
                 to={`/state/${eachValue.state_code}`}
@@ -306,7 +304,7 @@ class Home extends Component {
         )}
         <div className="home-result-container">
           <div className="home-top-list">
-            <div className="list-item" data-testid="countryWideConfirmedCases">
+            <div className="list-item" testid="countryWideConfirmedCases">
               <p className="confirm-card-name">Confirmed</p>
               <img
                 src="https://res.cloudinary.com/dyhsyterg/image/upload/v1641905267/confirmed_qmelok.svg"
@@ -315,7 +313,7 @@ class Home extends Component {
               />
               <p className="confirm-card-number">{totalConfirmed}</p>
             </div>
-            <div className="list-item" data-testid="countryWideActiveCases">
+            <div className="list-item" testid="countryWideActiveCases">
               <p className="active-card-name">Active</p>
               <img
                 src="https://res.cloudinary.com/dyhsyterg/image/upload/v1641908440/active_tmhkjf.svg"
@@ -324,7 +322,7 @@ class Home extends Component {
               />
               <p className="active-card-number">{totalActive}</p>
             </div>
-            <div className="list-item" data-testid="countryWideRecoveredCases">
+            <div className="list-item" testid="countryWideRecoveredCases">
               <p className="recovered-card-name">Recovered</p>
               <img
                 src="https://res.cloudinary.com/dyhsyterg/image/upload/v1641909310/recovered_dtfpwl.svg"
@@ -333,7 +331,7 @@ class Home extends Component {
               />
               <p className="recovered-card-number">{totalRecovered}</p>
             </div>
-            <div className="list-item" data-testid="countryWideDeceasedCases">
+            <div className="list-item" testid="countryWideDeceasedCases">
               <p className="deceased-card-name">Deceased</p>
               <img
                 src="https://res.cloudinary.com/dyhsyterg/image/upload/v1641909662/deceased_tskayc.svg"
@@ -343,7 +341,7 @@ class Home extends Component {
               <p className="deceased-card-number">{totalDeceased}</p>
             </div>
           </div>
-          <div data-testid="stateWiseCovidDataTable" className="state-table">
+          <div testid="stateWiseCovidDataTable" className="state-table">
             <div className="state-result-heading">
               <div className="state-ul-holder">
                 <p className="first-column-title">States/UT</p>
@@ -351,7 +349,7 @@ class Home extends Component {
                   type="button"
                   className="icon-button"
                   onClick={this.ascendingList}
-                  data-testid="ascendingSort"
+                  testid="ascendingSort"
                 >
                   <FcGenericSortingAsc className="ascending-icon" />
                 </button>
@@ -359,7 +357,7 @@ class Home extends Component {
                   type="button"
                   className="icon-button"
                   onClick={this.descendingList}
-                  data-testid="descendingSort"
+                  testid="descendingSort"
                 >
                   <FcGenericSortingDesc className="descending-icon" />
                 </button>
@@ -394,7 +392,7 @@ class Home extends Component {
   }
 
   loaderContainer = () => (
-    <div data-testid="homeRouteLoader" className="loader-container">
+    <div testid="homeRouteLoader" className="loader-container">
       <Loader type="TailSpin" color="#007BFF" width="25px" height="25px" />
     </div>
   )

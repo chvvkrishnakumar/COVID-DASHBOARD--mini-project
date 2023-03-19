@@ -1,8 +1,18 @@
+/* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
 
 import Loader from 'react-loader-spinner'
 
-import {LineChart, XAxis, YAxis, Tooltip, Line, BarChart, Bar} from 'recharts'
+import {
+  LineChart,
+  Legend,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Line,
+  BarChart,
+  Bar,
+} from 'recharts'
 
 import Header from '../Header'
 
@@ -471,14 +481,16 @@ class StateSpecific extends Component {
           Last update on {requiredBasicDetails.lastUpdated}.
         </p>
         <ul className="state-specific-card-list">
-          <li className={confirmedCardClassName}>
+          <li
+            testid="stateSpecificConfirmedCasesContainer"
+            className={confirmedCardClassName}
+          >
             <button
               type="button"
               className="card-list-button"
               onClick={() => this.onCardClick(cardConstants.confirmed)}
-              data-testid="stateSpecificConfirmedCasesContainer"
             >
-              <p className="confirm-card-name">Confirmed</p>
+              <h1 className="confirm-card-name">Confirmed</h1>
               <img
                 src="https://res.cloudinary.com/dyhsyterg/image/upload/v1641905267/confirmed_qmelok.svg"
                 className="confirm-card-image"
@@ -489,14 +501,16 @@ class StateSpecific extends Component {
               </p>
             </button>
           </li>
-          <li className={activeCardClassName}>
+          <li
+            testid="stateSpecificActiveCasesContainer"
+            className={activeCardClassName}
+          >
             <button
               type="button"
               className="card-list-button"
               onClick={() => this.onCardClick(cardConstants.active)}
-              data-testid="stateSpecificActiveCasesContainer"
             >
-              <p className="active-card-name">Active</p>
+              <h1 className="active-card-name">Active</h1>
               <img
                 src="https://res.cloudinary.com/dyhsyterg/image/upload/v1641908440/active_tmhkjf.svg"
                 className="active-card-image"
@@ -512,9 +526,9 @@ class StateSpecific extends Component {
               type="button"
               className="card-list-button"
               onClick={() => this.onCardClick(cardConstants.recovered)}
-              data-testid="stateSpecificRecoveredCasesContainer"
+              testid="stateSpecificRecoveredCasesContainer"
             >
-              <p className="recovered-card-name">Recovered</p>
+              <h1 className="recovered-card-name">Recovered</h1>
               <img
                 src="https://res.cloudinary.com/dyhsyterg/image/upload/v1641909310/recovered_dtfpwl.svg"
                 className="recovered-card-image"
@@ -525,14 +539,16 @@ class StateSpecific extends Component {
               </p>
             </button>
           </li>
-          <li className={deceasedCardClassName}>
+          <li
+            testid="stateSpecificDeceasedCasesContainer"
+            className={deceasedCardClassName}
+          >
             <button
               type="button"
               className="card-list-button"
               onClick={() => this.onCardClick(cardConstants.deceased)}
-              data-testid="stateSpecificDeceasedCasesContainer"
             >
-              <p className="deceased-card-name">Deceased</p>
+              <h1 className="deceased-card-name">Deceased</h1>
               <img
                 src="https://res.cloudinary.com/dyhsyterg/image/upload/v1641909662/deceased_tskayc.svg"
                 className="deceased-card-image"
@@ -555,16 +571,13 @@ class StateSpecific extends Component {
             <p className="ncp-report">NCP report</p>
             <p className="population-heading">Population</p>
             <p className="content-numbers">{requiredBasicDetails.population}</p>
-            <p className="population-heading">Tested</p>
+            <h1 className="population-heading">Tested</h1>
             <p className="content-numbers">{requiredBasicDetails.tested}</p>
           </div>
         </div>
 
         <h1 className="top-districts">Top Districts</h1>
-        <ul
-          data-testid="topDistrictsUnorderedList"
-          className="top-districts-list"
-        >
+        <ul testid="topDistrictsUnorderedList" className="top-districts-list">
           {districtValue.map(eachValue => (
             <li className="top-districts-list-item" key={eachValue.name}>
               <p className="top-districts-name">{eachValue.value}</p>
@@ -577,13 +590,13 @@ class StateSpecific extends Component {
   }
 
   stateLoaderContainer = () => (
-    <div data-testid="stateDetailsLoader" className="state-loader-container">
+    <div testid="stateDetailsLoader" className="state-loader-container">
       <Loader type="TailSpin" color="#007BFF" width="25px" height="25px" />
     </div>
   )
 
   timeLineLoaderContainer = () => (
-    <div data-testid="timelinesDataLoader" className="state-loader-container">
+    <div testid="timelinesDataLoader" className="state-loader-container">
       <Loader type="TailSpin" color="#007BFF" width="25px" height="25px" />
     </div>
   )
@@ -854,7 +867,7 @@ class StateSpecific extends Component {
     const selectOptions = Object.keys(districtNames)
 
     return (
-      <div data-testid="lineChartsContainer" className="graphs-container">
+      <div testid="lineChartsContainer" className="graphs-container">
         <div className="graphs-lg">
           <div className="bar-chart-lg">
             <BarChart
@@ -871,6 +884,9 @@ class StateSpecific extends Component {
                 tickLine={0}
                 tick={{fill: colorValue, strokeWidth: 1}}
               />
+              <YAxis />
+              <Tooltip />
+              <Legend />
               <Bar
                 dataKey="number"
                 fill={colorValue}
