@@ -1,89 +1,101 @@
 /* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
-
 import Loader from 'react-loader-spinner'
-
 import Header from '../Header'
-
 import Footer from '../Footer'
-
+import AboutCovidFaqList from '../AboutCovidFaqList'
+import AboutCovidFactList from '../AboutCovidFactList'
 import './index.css'
-
-const appConstants = {
-  initial: 'INITIAL',
-  progress: 'IN_PROGRESS',
-  success: 'SUCCESS',
-}
 
 class About extends Component {
   state = {
-    faqList: [],
-    appStatus: appConstants.initial,
+    isLoading: true,
+    aboutList: {},
+    aboutFaq: {},
   }
 
   componentDidMount() {
-    this.setState({appStatus: appConstants.progress}, this.getDetails)
+    this.aboutCovidList()
   }
 
-  startFetching = () => {
-    const {history} = this.props
-    history.replace('/')
-  }
-
-  getDetails = async () => {
-    const url = 'https://apis.ccbp.in/covid19-faqs'
-    const response = await fetch(url)
-    const data = await response.json()
+  aboutCovidList = async () => {
+    const apiUrl = 'https://apis.ccbp.in/covid19-faqs'
+    const options = {
+      method: 'GET',
+    }
+    const response = await fetch(apiUrl, options)
     if (response.ok) {
-      const {faq} = data
-      this.setState({appStatus: appConstants.success, faqList: faq})
+      const data = await response.json()
+      const aboutBannerData = data.factoids.map(eachItem => ({
+        banner: eachItem.banner,
+        id: eachItem.id,
+      }))
+      const aboutFaqData = data.faq.map(eachItem => ({
+        aboutAnswer: eachItem.answer,
+        aboutCategory: eachItem.category,
+        aboutQuestionNo: eachItem.qno,
+        aboutQuestion: eachItem.question,
+      }))
+
+      this.setState({
+        aboutFaq: aboutFaqData,
+        aboutList: aboutBannerData,
+        isLoading: false,
+      })
+    } else {
+      console.log('data not available')
     }
   }
 
-  successContainer = () => {
-    const {faqList} = this.state
+  aboutCovidLists = () => {
+    const {aboutFaq, aboutList} = this.state
     return (
-      <div className="about-middle-container">
-        <h1 className="about-heading">About</h1>
-        <p className="last-updated">Last update on November 1st 2021.</p>
-        <p className="vaccine-distribution">
-          COVID-19 vaccines be ready for distribution
-        </p>
-        <ul testid="faqsUnorderedList" className="ques-list">
-          {faqList.map(eachValue => (
-            <li className="ques-list-item" key={eachValue.qno}>
-              <p className="question">{eachValue.question}</p>
-              <p className="answer">{eachValue.answer}</p>
-            </li>
+      <>
+        <ul className="About-about-facts" testid="faqsUnorderedList">
+          {aboutFaq.map(eachItem => (
+            <AboutCovidFaqList
+              answer={eachItem.aboutAnswer}
+              question={eachItem.aboutQuestion}
+              key={eachItem.aboutQuestionNo}
+            />
           ))}
         </ul>
-      </div>
+
+        <h1 className="About-heading-class">Factoids</h1>
+        <ul className="About-about-facts">
+          {aboutList.map(eachItem => (
+            <AboutCovidFactList banner={eachItem.banner} key={eachItem.id} />
+          ))}
+        </ul>
+      </>
     )
   }
 
-  loaderContainer = () => (
-    <div className="main-home-container">
-      <div testid="aboutRouteLoader" className="loader-container">
-        <Loader type="TailSpin" color="#007BFF" width="25px" height="25px" />
-      </div>
-    </div>
-  )
-
-  checkCondition = () => {
-    const {appStatus} = this.state
-    switch (appStatus) {
-      case appConstants.success:
-        return this.successContainer()
-      default:
-        return this.loaderContainer()
-    }
-  }
-
   render() {
+    const {isLoading} = this.state
     return (
       <>
         <Header />
-        {this.checkCondition()}
+        <div className="About-container">
+          {isLoading ? (
+            <div className="loading-class" testid="aboutRouteLoader">
+              <Loader type="Oval" color="#007BFF" height={50} width={50} />
+            </div>
+          ) : (
+            <>
+              <div className="About-container-column">
+                <h1 className="About-heading">About</h1>
+                <p className="About-paragraph">
+                  Last update on march 28th 2021.
+                </p>
+                <p className="About-heading-class">
+                  COVID-19 vaccines be ready for distribution
+                </p>
+              </div>
+              <div>{this.aboutCovidLists()}</div>
+            </>
+          )}
+        </div>
         <Footer />
       </>
     )

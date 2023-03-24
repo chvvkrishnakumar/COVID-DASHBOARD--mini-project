@@ -1,111 +1,69 @@
+import {Link} from 'react-router-dom'
 import {Component} from 'react'
-
-import {Link, withRouter} from 'react-router-dom'
-
 import './index.css'
 
 class Header extends Component {
-  state = {
-    showMenu: false,
+  state = {isMenuHeader: false}
+
+  mobileMenuClick = () => {
+    this.setState(prevState => ({isMenuHeader: !prevState.isMenuHeader}))
   }
 
-  toggleMenu = () =>
-    this.setState(prevState => ({showMenu: !prevState.showMenu}))
+  mobileMenu = () => (
+    <>
+      <ul className="mobile-unorderlist">
+        <Link to="/" className="header-link-class">
+          <li className="header-menu-paragraph">Home</li>
+        </Link>
 
-  closeMenu = () => this.setState({showMenu: false})
+        <Link to="/about" className="header-link-class">
+          <li className="header-menu-paragraph">About</li>
+        </Link>
+      </ul>
+    </>
+  )
 
   render() {
-    const {showMenu} = this.state
-    const {match} = this.props
-    const {path} = match
-    const homeClassName = path === '/' ? 'link-name highlight' : 'link-name'
-    const aboutClassName =
-      path === '/about' ? 'link-name highlight' : 'link-name'
-    const vaccinationClassName =
-      path === '/vaccination' ? 'link-name highlight' : 'link-name'
+    const {isMenuHeader} = this.state
     return (
       <>
-        <nav className="header-list">
-          <Link to="/" className="link-logo">
-            <span className="app-name">COVID19</span>
-            <span className="app-name blue-text">INDIA</span>
+        <nav className="nav-container">
+          <Link to="/" className="link-class">
+            <h1 className="header-covid-logo">COVID19INDIA</h1>
           </Link>
-          <ul className="nav-list">
-            <Link className="link-logo" to="/">
-              <li key="1">
-                <button type="button" className={homeClassName}>
-                  Home
-                </button>
-              </li>
+          <ul className="header-menu">
+            <Link to="/" className="link-class">
+              <li className="header-menu-paragraph">Home</li>
             </Link>
-            <Link className="link-logo" to="/vaccination">
-              <li key="2">
-                <button type="button" className={vaccinationClassName}>
-                  Vaccination
-                </button>
-              </li>
-            </Link>
-            <Link className="link-logo" to="/about">
-              <li key="3">
-                <button type="button" className={aboutClassName}>
-                  About
-                </button>
-              </li>
+
+            <Link to="/about" className="link-class">
+              <li className="header-menu-paragraph">About</li>
             </Link>
           </ul>
-          <button
-            type="button"
-            className="menu-button"
-            onClick={this.toggleMenu}
-          >
-            <img
-              src="https://res.cloudinary.com/dyhsyterg/image/upload/v1643368210/add-to-queue_1_lrcjeu.png"
-              alt="menu item"
-              className="menu-image"
-            />
-          </button>
         </nav>
-        {showMenu ? (
-          <ul className="menu-list">
-            <Link className="link-item" to="/">
-              <li key="1">
-                <button type="button" className={homeClassName}>
-                  Home
-                </button>
-              </li>
+        <div>
+          <nav className="header-list-container">
+            <Link to="/" className="link-class">
+              <h1 className="header-covid-logo">COVID19INDIA</h1>
             </Link>
-            <Link className="link-item" to="/vaccination">
-              <li key="2">
-                <button type="button" className={vaccinationClassName}>
-                  Vaccination
-                </button>
-              </li>
-            </Link>
-            <Link className="link-item" to="/about">
-              <li key="3">
-                <button type="button" className={aboutClassName}>
-                  About
-                </button>
-              </li>
-            </Link>
-            <li className="close-item" key="3">
-              <button
-                type="button"
-                className="close-button"
-                onClick={this.closeMenu}
-              >
-                <img
-                  src="https://res.cloudinary.com/dyhsyterg/image/upload/v1643369220/Shape_hewlfb.png"
-                  alt="close icon"
-                  className="close-icon"
-                />
-              </button>
-            </li>
-          </ul>
-        ) : null}
+            <button
+              type="button"
+              className="mobile-menu"
+              onClick={this.mobileMenuClick}
+            >
+              <img
+                src="https://res.cloudinary.com/charani/image/upload/v1636961155/add-to-queue_1_jbzrnv.png"
+                alt="menu"
+              />
+            </button>
+          </nav>
+          <div className="mobile-class-menu">
+            {isMenuHeader ? this.mobileMenu() : ''}
+          </div>
+        </div>
       </>
     )
   }
 }
 
-export default withRouter(Header)
+export default Header
